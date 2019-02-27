@@ -17,6 +17,20 @@ export default class App extends React.Component{
       ]
     }
   }
+  deleteItem = (id) => {
+    this.setState(({ todoData })=>{
+      const idx = todoData.findIndex((el)=> el.id === id);
+
+      const before = todoData.slice(0, idx);
+      const after = todoData.slice(idx + 1);
+      const newArray = [...before, ...after];
+
+      return {
+        todoData: newArray
+      };
+    });
+  };
+
   render(){
     const {todoData} = this.state;
     return (     
@@ -26,7 +40,7 @@ export default class App extends React.Component{
       <ItemStatusFilter />
     </div>
 
-    <TodoList todos={todoData} onDeleted = {(id)=> console.log(id)}/>
+    <TodoList todos={todoData} onDeleted = {this.deleteItem}/>
   </div>
   )}
 }
