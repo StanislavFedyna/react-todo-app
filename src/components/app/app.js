@@ -9,16 +9,17 @@ import ItemAddForm from '../item-add-form';
 import './app.css';
 
 export default class App extends React.Component{
-  constructor(){
-    super();
-    this.state = {
+
+  maxId = 100;
+
+  state = {
       todoData : [
         { label: 'Drink Coffee', important: false, id: 1 },
         { label: 'Make Awesome App', important: true, id: 2 },
         { label: 'Have a lunch', important: false, id: 3 }
       ]
     }
-  }
+
   deleteItem = (id) => {
     this.setState(({ todoData })=>{
       const idx = todoData.findIndex((el)=> el.id === id);
@@ -34,12 +35,32 @@ export default class App extends React.Component{
   };
 
   addItem = (text) => {
-    console.log(`hello from ${text}`)
+    const newItem = {
+      label: text,
+      important: false,
+      id: this.maxId++
+    }
+
+    this.setState(({ todoData }) => {
+      const newArr = [...todoData, newItem]; //додавання елементу без зміни помереднього
+      return {
+        todoData : newArr
+      }
+    })
   }
+
+  onToggleImportant = (id) => {
+    console.log('Toggle important', id)
+  };
+
+  onToggleDone = (id) => {
+    console.log('Toggle done', id)
+  };
 
 
   render(){
     const {todoData} = this.state;
+
     return (     
     <div className="todo-app"> 
       <AppHeader toDo={1} done={3} />
@@ -47,8 +68,13 @@ export default class App extends React.Component{
       <SearchPanel />
       <ItemStatusFilter />
     </div>
-      <TodoList todos={todoData} onItemAdded={this.addItem} />
-      <ItemAddForm onAdded={this.addItem} />
+      <TodoList 
+      onToggleImportant={this.onToggleImportant} 
+      onToggleDone={this.onToggleDone}
+      onDeleted={this.deleteItem} 
+      todos={todoData} 
+      />
+      <ItemAddForm onAdded={this.addItem}/>
   </div>
   )}
 }
