@@ -4,8 +4,10 @@ import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
+import ItemAddForm from '../item-add-form';
 
 import './app.css';
+
 export default class App extends React.Component{
   constructor(){
     super();
@@ -31,16 +33,18 @@ export default class App extends React.Component{
     });
   };
 
+
   render(){
     const {todoData} = this.state;
     return (     
-    <div className="todo-app"> <AppHeader toDo={1} done={3} />
+    <div className="todo-app"> 
+      <AppHeader toDo={1} done={3} />
     <div className="top-panel d-flex">
       <SearchPanel />
       <ItemStatusFilter />
     </div>
-
-    <TodoList todos={todoData} onDeleted = {this.deleteItem}/>
+      <TodoList todos={todoData} onDeleted={this.deleteItem} />
+      <ItemAddForm/>
   </div>
   )}
 }
