@@ -33,6 +33,10 @@ export default class App extends React.Component{
     });
   };
 
+  addItem = (text) => {
+    console.log(`hello from ${text}`)
+  }
+
 
   render(){
     const {todoData} = this.state;
@@ -43,8 +47,8 @@ export default class App extends React.Component{
       <SearchPanel />
       <ItemStatusFilter />
     </div>
-      <TodoList todos={todoData} onDeleted={this.deleteItem} />
-      <ItemAddForm/>
+      <TodoList todos={todoData} onItemAdded={this.addItem} />
+      <ItemAddForm onAdded={this.addItem} />
   </div>
   )}
 }

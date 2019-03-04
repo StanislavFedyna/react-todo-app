@@ -4,6 +4,8 @@ import './item-add-form.css';
 export default class ItemAddForm extends React.Component{
 
   render(){
-    return (<div className='item-add-form'> <button> Add Item </button> </div> )
+    const {onAdded} = this.props;
+
+    return (<div className='item-add-form'> <button onClick={onAdded('stas')} className='btn btn-outline-dark btn-block'> Add Item </button> </div> )
   }
 }
