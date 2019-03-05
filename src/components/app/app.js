@@ -19,7 +19,7 @@ export default class App extends React.Component{
         this.createTodoItem('Have a lunch')
       ]
     }
-  createTodoItem = (label) => {
+  createTodoItem(label) {
     return {
       label,
       important: false,
@@ -44,7 +44,7 @@ export default class App extends React.Component{
 
   addItem = (text) => {
     const newItem = this.createTodoItem(text);
-    
+
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem]; //додавання елементу без зміни помереднього
       return {
@@ -54,7 +54,22 @@ export default class App extends React.Component{
   }
 
   onToggleImportant = (id) => {
-    console.log('Toggle important', id)
+    this.setState(({todoData})=>{
+      const idx = todoData.findIndex((el)=> el.id === id);
+
+      //1.Update Object
+      const oldItem = todoData[idx];
+      const newItem = {...oldItem, done: !oldItem.done};
+
+      //2. Constructor new Array
+      const before = todoData.slice(0, idx);
+      const after = todoData.slice(idx + 1);
+      const newArray = [...before, newItem, ...after];
+
+      return{
+        todoData: newArray
+      }
+    })
   };
 
   onToggleDone = (id) => {
